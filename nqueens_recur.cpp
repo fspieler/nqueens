@@ -15,7 +15,7 @@ int num_solns(int DIM, int r=0)
   }
   for(int c = 0; c < (!r ? (DIM&1) ? DIM/2+1 : DIM/2 : DIM); ++c)
   {
-    if(r == 0 && c == DIM/2)
+    if(r == 0 && DIM%2 && c == DIM/2 )
       count*=2;
     if(!cols[c] && !diag_desc[DIM-1+r-c] && !diag_asc[r+c])
     {
@@ -28,6 +28,8 @@ int num_solns(int DIM, int r=0)
       diag_asc[r+c] = false;
     }
   }
+  if( r==0 && !(DIM&1))
+    count*=2;
   return count;
 }
 
