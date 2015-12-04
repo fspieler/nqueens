@@ -1,1 +1,4 @@
 nqueens
+nqueens_recur
+nqueens_iter
+nqueens_threads
