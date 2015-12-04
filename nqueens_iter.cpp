@@ -7,14 +7,13 @@
 std::array<int,25> cols;
 std::array<int,50> diag_desc;
 std::array<int,50> diag_asc;
-std::vector<int> stack;
+std::array<int,25> stack;
 int stack_index = 0;
 int count = 0;
 
 int num_solns(int DIM)
 {
   int r = 0;
-  stack.push_back(-1);
 outer:
   while(r >= 0)
   {
@@ -26,8 +25,6 @@ outer:
       if(stack_index > r)
       {
         c = 1+stack[stack_index--];
-        if(stack.size())
-          stack.pop_back();
       }
       for(; c < (!r ? (DIM&1) ? DIM/2+1 : DIM/2 : DIM); ++c)
       {
@@ -36,7 +33,7 @@ outer:
         if(!cols[c] && !diag_desc[DIM-1+r-c] && !diag_asc[r+c])
         {
           stack_index++;
-          stack.push_back(c);
+          stack[stack_index] = c;
           cols[c] = true;
           diag_desc[DIM-1+r-c] = true;
           diag_asc[r+c] = true;
