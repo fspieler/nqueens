@@ -15,10 +15,10 @@ run_test_recur: test_recur
 	./test_recur --gtest_filter=nqueens.n_less*
 
 test_recur: tests.cpp nqueens_recur.cpp
-	g++ -O3 -I. -pthread -W -Wall -Wextra -std=c++11 tests.cpp nqueens_recur.cpp /usr/local/lib/libgtest.a -o test_recur
+	g++ -O3 -I. -pthread -W -Wall -Wextra -std=c++14 tests.cpp nqueens_recur.cpp -lgtest_main -o test_recur
 
 test_iter: tests.cpp nqueens_iter.cpp
-	g++ -O3 -I. -pthread -W -Wall -Wextra -std=c++11 tests.cpp nqueens_iter.cpp /usr/local/lib/libgtest.a -o test_iter
+	g++ -O3 -I. -pthread -W -Wall -Wextra -std=c++14 tests.cpp nqueens_iter.cpp -lgtest_main -o test_iter
 
 clean: 
-	rm -f nqueens_recur nqueens_iter
+	rm -f nqueens_recur nqueens_iter test_iter test_recur
