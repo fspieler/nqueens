@@ -4,4 +4,5 @@ nqueens_iter
 nqueens_threads
 test_iter
 test_recur
+test_threads
 *.swp
