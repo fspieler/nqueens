@@ -1,13 +1,31 @@
 #include <vector>
-#include <stdio.h>
-#include <cstdlib>
+#include <nqueens.h>
 
 std::vector<int> cols(25,0);
 std::vector<int> diag_desc(50,0);
 std::vector<int> diag_asc(50,0);
+
 int count = 0;
 
-int num_solns(int DIM, int r=0)
+void reset()
+{
+  for(auto& e : cols)
+    e = 0;
+  for(auto& e : diag_desc)
+    e = 0;
+  for(auto& e : diag_asc)
+    e = 0;
+  count = 0;
+}
+
+int nqueens(int,int);
+
+int nqueens(int DIM)
+{
+  return nqueens(DIM,0);
+}
+
+int nqueens(int DIM, int r)
 {
   if(r == DIM)
   {
@@ -22,7 +40,7 @@ int num_solns(int DIM, int r=0)
       cols[c] = true;
       diag_desc[DIM-1+r-c] = true;
       diag_asc[r+c] = true;
-      num_solns(DIM, r+1);
+      nqueens(DIM, r+1);
       cols[c] = false;
       diag_desc[DIM-1+r-c] = false;
       diag_asc[r+c] = false;
@@ -31,17 +49,4 @@ int num_solns(int DIM, int r=0)
   if( r==0 && !(DIM&1))
     count*=2;
   return count;
-}
-
-int main(int argc,char**argv)
-{
-  if(argc < 2)
-  {
-    printf("Provide single argument n (number of queens on n*n board)\n");
-    return 1;
-  }
-
-  int dim = atoi(argv[1]);
-  printf("%d: %d\n", dim, num_solns(dim));
-  return 0;
 }

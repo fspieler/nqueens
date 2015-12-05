@@ -1,8 +1,7 @@
 #include <debug.h>
-#include <vector>
 #include <array>
-#include <stdio.h>
-#include <cstdlib>
+
+#include <nqueens.h>
 
 std::array<int,25> cols;
 std::array<int,50> diag_desc;
@@ -11,7 +10,21 @@ std::array<int,25> stack;
 int stack_index = 0;
 int count = 0;
 
-int num_solns(int DIM)
+void reset()
+{
+  for(auto& e : cols)
+    e = 0;
+  for(auto& e : diag_desc)
+    e = 0;
+  for(auto& e : diag_asc)
+    e = 0;
+  for(auto& e : stack)
+    e = 0;
+  stack_index = 0;
+  count = 0;
+}
+
+int nqueens(int DIM)
 {
   int r = 0;
 outer:
@@ -52,17 +65,4 @@ outer:
   if(DIM%2==0)
     count*=2;
   return count;
-}
-
-int main(int argc,char**argv)
-{
-  if(argc < 2)
-  {
-    printf("Provide single argument n (number of queens on n*n board)\n");
-    return 1;
-  }
-
-  int dim = atoi(argv[1]);
-  printf("%d: %d\n", dim, num_solns(dim));
-  return 0;
 }
