@@ -35,7 +35,7 @@ int nqueens(int DIM)
   {
     std::mutex m;
     int count = 0;
-    int cols_per_thread = 2;
+    int cols_per_thread = 1;
     auto compute = [&](auto r, auto c_beg, auto c_end, bool double_it)->void {
       int temp = Solver().run(DIM, r, c_beg, c_end);
       if(double_it)
@@ -58,7 +58,6 @@ int nqueens(int DIM)
         break;
       i++;
     }
-
 
     for(std::thread& t : threads)
     {
