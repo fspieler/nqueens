@@ -42,8 +42,3 @@ TEST(nqueens,n_greater_than_12)
   EXPECT_EQ(95815104,nqueens(17));
   reset();
 }
-
-int main(int argc, char **argv) {
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-}
