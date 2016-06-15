@@ -1,3 +1,13 @@
+# Build and run
+
+Requires g++ with --std=c++14. Testing requires gtest and -lgtest_main.
+
+Build with `make nqueens_<recur|iter|threads>`
+
+Build and run tests with `make test_<recur|iter|threads>`
+
+Run with `./nqueens_<recur|iter|threads> n`
+
 # nqueens
 
 N-Queens is a comp sci take on a classic chess problem:
