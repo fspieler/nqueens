@@ -1,3 +1,13 @@
+# Build and run
+
+Requires g++ with --std=c++14. Testing requires gtest and -lgtest_main.
+
+Build with `make nqueens_<recur|iter|threads>`
+
+Build and run tests with `make test_<recur|iter|threads>`
+
+Run with `./nqueens_<recur|iter|threads> n`
+
 # nqueens
 
 N-Queens is a comp sci take on a classic chess problem:
@@ -14,13 +24,12 @@ While I was familiar with the backtracking solution described above, I also gain
 
 There are several optimizations I use:
 
-* There's no need to iterate over every column in the first row, since each solution after the midway point should be a reflection of a solution before the midway point. So it should be enough to simply double the number of solutions for each column in the first row, although if there is an odd number of columns (ie N is odd), it's total should not be doubled.
+* There's no need to iterate over every column in the first row, since each solution after the midway point should be a reflection of a solution before the midway point. So it should be enough to simply double the number of solutions for each column in the first row, although if there is an odd number of columns (ie N is odd), the middle column's total should not be doubled.
 
 * Checking whether or not a square is attacked by one of the already-placed queens can be a constant time operation by keeping three additional arrays: occupied columns, occupied "ascending" diagonals, and occupied "descending" diagonals. For a given row and column, there should be a constant time lookup to see whether or not the current column, ascending diagonal, or descending diagonal is already occupied. If none are, that square is a candidate. If any are, it is not.
 
-* While my initial attempt was recursive, which required that the inner loop of the algorithm required frequent function calls. Depending on the problem size, this could mean trillions of extra function calls, which adds up. So subsequent attempts are iterative. This ended up having a negligible effect on performance.
+* While my initial attempt was recursive, which required that the inner loop of the algorithm required frequent function calls. Depending on the problem size, this could mean trillions of extra function calls, which adds up. So subsequent attempts are iterative. This ended up having a small but measurable effect on performance.
 
 * Computing all of the permutations and solutions for different columns in a row is embarassingly parallel, so I sped up my iterative solution by computing each column of the first row in its own thread. This ended up having a rather large effect on performance on my 8-core processor: hovering around 6x for problem sets around N=14 through N=17 (I haven't tested higher yet).
 
 A limitation of the above multi-threading approach is that some columns are more difficult than others, so typically one thread takes longer than all the rest to finish. I'm still exploring approaches for keeping threads busy. Perhaps it is possible to get closer to that mythical 8x speedup.
-
