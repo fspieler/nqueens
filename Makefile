@@ -1,36 +1,25 @@
-.PHONY: all clean run_test_iter run_test_recur run_test_threads
+.PHONY: all clean
 
-all: clean nqueens_recur nqueens_iter
+implementations = recur iter threads threads2
 
-clean: 
-	rm -f nqueens_recur nqueens_iter nqueens_threads test_iter test_recur test_threads
+all: clean
 
-# iterative
-nqueens_iter: nqueens_iter.cpp main.cpp
-	g++ -O3 -I. -W -Wall -Wextra -std=c++14 main.cpp nqueens_iter.cpp -o nqueens_iter
+define test_template =
+.PHONY: run-test-$(1) clean-$(1)
+all:nqueens_$(1) test-$(1)
+test-all: run-test-$(1)
+run-test-$(1): test-$(1)
+	@./test-$(1) --gtest_color=yes
+clean: clean-$(1)
+clean-$(1):
+	rm -f test-$(1) nqueens_$(1)
+nqueens_$(1): main.cpp nqueens_$(1).cpp
+	g++ -O3 -I. -pthread -W -Wall -Wextra -std=c++14 $$^ -o $$@
+test-$(1): tests.cpp  nqueens_$(1).cpp
+	g++ -O3 -I. -pthread -W -Wall -Wextra -std=c++14 $$^ -L/usr/lib -lgtest -lgtest_main -o $$@
+endef
 
-test_iter: tests.cpp nqueens_iter.cpp
-	g++ -O3 -I. -pthread -W -Wall -Wextra -std=c++14 tests.cpp nqueens_iter.cpp -lgtest_main -o test_iter
+$(foreach test,$(implementations), $(eval $(call test_template,$(test))))
 
-run_test_iter: test_iter
-	./test_iter --gtest_filter=nqueens.n_less*
 
-# recursive
-nqueens_recur: nqueens_recur.cpp main.cpp
-	g++ -O3 -I. -W -Wall -Wextra -std=c++14 main.cpp nqueens_recur.cpp -o nqueens_recur
 
-test_recur: tests.cpp nqueens_recur.cpp
-	g++ -O3 -I. -pthread -W -Wall -Wextra -std=c++14 tests.cpp nqueens_recur.cpp -lgtest_main -o test_recur
-
-run_test_recur: test_recur 
-	./test_recur --gtest_filter=nqueens.n_less*
-
-# multi-threaded
-nqueens_threads: nqueens_threads.cpp main.cpp
-	g++ -O3 -I. -pthread -W -Wall -Wextra -std=c++14 main.cpp nqueens_threads.cpp -o nqueens_threads
-
-test_threads: tests.cpp nqueens_threads.cpp
-	g++ -O3 -I. -pthread -W -Wall -Wextra -std=c++14 tests.cpp nqueens_threads.cpp -lgtest_main -o test_threads
-
-run_test_threads: test_threads 
-	./test_threads --gtest_filter=nqueens.n_less*
