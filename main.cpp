@@ -11,6 +11,6 @@ int main(int argc,char**argv)
   }
 
   int dim = atoi(argv[1]);
-  printf("%d: %d\n", dim, nqueens(dim));
+  printf("%d: %lld\n", dim, nqueens(dim));
   return 0;
 }

@@ -1,7 +1,6 @@
 #ifndef NQUEENS_HEADER_INCLUDE_GUARD
 #define NQUEENS_HEADER_INCLUDE_GUARD
 
-int nqueens(int n);
-void reset();
+long long nqueens(int n);
 
 #endif //NQUEENS_HEADER_INCLUDE_GUARD

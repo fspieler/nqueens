@@ -15,15 +15,15 @@ class Solver
   std::array<int,50> diag_asc;
   std::array<int,25> stack;
   int stack_index = 0;
-  int count = 0;
+  long long count = 0;
 public:
-  int run(int dim, int r, int c_beg, int c_end);
+  long long run(int dim, int r, int c_beg, int c_end);
   Solver() = default;
   Solver(const Solver&) = default;
   Solver(Solver&&) = delete;
 };
 
-int nqueens(int DIM)
+long long nqueens(int DIM)
 {
   if(DIM <= 14 && false)
   {
@@ -34,7 +34,7 @@ int nqueens(int DIM)
   } else
   {
     std::mutex m;
-    int count = 0;
+    long long count = 0;
     int cols_per_thread = 1;
     auto compute = [&](auto r, auto c_beg, auto c_end, bool double_it)->void {
       int temp = Solver().run(DIM, r, c_beg, c_end);
@@ -68,7 +68,7 @@ int nqueens(int DIM)
   }
 }
 
-int Solver::run(int DIM, int r, int c_beg, int c_end)
+long long Solver::run(int DIM, int r, int c_beg, int c_end)
 {
   const int initial_r = r;
   c_end = std::min(c_end,DIM);
