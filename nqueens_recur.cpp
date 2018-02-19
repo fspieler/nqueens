@@ -6,8 +6,8 @@ class NQueensRecurSolver {
   std::array<int,25> cols;
   std::array<int,50> diag_desc;
   std::array<int,50> diag_asc;
-  long long count;
-  long long recur_helper(int n, int r){
+  long long _count;
+  long long recur_helper(int n, int r, long long count){
     if(r == n)
     {
       return ++count;
@@ -21,7 +21,7 @@ class NQueensRecurSolver {
         cols[c] = true;
         diag_desc[n-1+r-c] = true;
         diag_asc[r+c] = true;
-        recur_helper(n, r+1);
+        count = recur_helper(n, r+1,count);
         cols[c] = false;
         diag_desc[n-1+r-c] = false;
         diag_asc[r+c] = false;
@@ -37,13 +37,13 @@ public:
     cols{},
     diag_desc{},
     diag_asc{},
-    count(recur_helper(n,0))
+    _count(recur_helper(n,0,0))
   {}
   long long value(){
-    return count;
+    return _count;
   }
 };
 
 long long nqueens(int n){
-  NQueensRecurSolver(n).value();
+  return NQueensRecurSolver(n).value();
 }
