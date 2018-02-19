@@ -1,8 +1,4 @@
-nqueens
-nqueens_recur
-nqueens_iter
-nqueens_threads
-test_iter
-test_recur
-test_threads
+nqueens_*
+!*.cpp
+test-*
 *.swp
