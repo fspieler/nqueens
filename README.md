@@ -32,4 +32,4 @@ There are several optimizations I use:
 
 * Computing all of the permutations and solutions for different columns in a row is embarassingly parallel, so I sped up my iterative solution by computing each column of the first row in its own thread. This ended up having a rather large effect on performance on my 8-core processor: hovering around 6x for problem sets around N=14 through N=17 (I haven't tested higher yet).
 
-A limitation of the above multi-threading approach is that some columns are more difficult than others, so typically one thread takes longer than all the rest to finish. I'm still exploring approaches for keeping threads busy. Perhaps it is possible to get closer to that mythical 8x speedup.
+A limitation of the above multi-threading approach is that some columns are more difficult than others, so typically one thread takes longer than all the rest to finish.
