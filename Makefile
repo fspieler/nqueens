@@ -1,6 +1,6 @@
 .PHONY: all clean
 
-implementations = recur iter threads threads2
+implementations = recur iter threads
 
 all: clean
 
